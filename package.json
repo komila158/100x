@@ -1,0 +1,27 @@
+{
+  "name": "100x",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": 
+  {
+    "start": "node index.js",
+    "dev": "nodemon index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/komila158/100x.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/komila158/100x/issues"
+  },
+  "homepage": "https://github.com/komila158/100x#readme",
+  "dependencies": {
+    "node-telegram-bot-api": "^0.66.0"
+  }
+}
