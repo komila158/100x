@@ -35,6 +35,106 @@ Quyidagi menyudan kerakli bo‘limni tanlang 👇
                     resize_keyboard: true,
                 },
             }
-        )
+        );
+      }else if (text == "📚 Kurslar" || "⬅️ Orqaga"  ) {
+    bot.sendMessage(
+      chatId,
+      `
+    🎓 Bizning o‘quv markazimizda quyidagi kurslar mavjud:
+
+1️⃣ Ingliz tili  
+2️⃣ Rus tili  
+3️⃣ Matematika  
+4️⃣ Dasturlash (Python, Web)  
+5️⃣ Grafik dizayn  
+
+👇 Quyidagi kurslardan birini tanlang va batafsil ma’lumot oling:
+
+    `,
+      {
+        reply_markup: {
+          inline_keyboard: [
+            [{ text: "🇬🇧 Ingliz tili", callback_data: "course_english" }],
+            [{ text: "🇷🇺 Rus tili", callback_data: "course_russian" }],
+            [{ text: "🧮 Matematika", callback_data: "course_math" }],
+            [{ text: "💻 Dasturlash", callback_data: "course_programming" }],
+            [{ text: "🎨 Grafik dizayn", callback_data: "course_design" }],
+          ],
+        },
       }
+    );
+
+  }else if (text == "ℹ️ Markaz haqida") {
+    const latitude = 41.3871008;
+    const longitude = 60.3624996;
+
+    bot.sendMessage(chatId, "📍 Bizning o‘quv markaz joylashuvi:");
+    bot.sendLocation(chatId, latitude, longitude);
+  }else{
+        bot.sendMessage( chatId,
+      `
+    ⚠️ Kechirasiz, men sizning xabaringizni tushunmadim.
+
+Iltimos, quyidagi tugmani bosing 👇
+/start
+    `
+    );
+  }
+});
+
+bot.on("callback_query", (query) => {
+  const chatId = query.message.chat.id;
+  const data = query.data;
+
+  if (data == "course_english") {
+    bot.sendMessage(
+        chatId,
+        `
+     🇬🇧 Ingliz tili kursi haqida:
+
+📆 Davomiyligi: 3 oy  
+⏰ Darslar: Haftasiga 3 marta (1,5 soatdan)  
+👨‍🏫 O‘qituvchi: Tajribali filologlar  
+💰 Narxi: 350 000 so‘m / oy
+
+✍️ Agar sizni bu kurs qiziqtirsa, “Ro‘yxatdan o‘tish” tugmasini bosing.
+ `,
+  {
+    reply_markup: {
+        keyboard: [
+            [{text: "✍️ Ro‘yxatdan o‘tish"}],
+            [{ text: "⬅️ Orqaga" }],
+        ],
+        resize_keyboard: true,
+    },
+  }
+
+    );
+  }else if (data == "course_russian") {
+       bot.sendMessage(
+        chatId,
+        `
+     🇬🇧 Ingliz tili kursi haqida:
+
+📆 Davomiyligi: 3 oy  
+⏰ Darslar: Haftasiga 3 marta (1,5 soatdan)  
+👨‍🏫 O‘qituvchi: Tajribali filologlar  
+💰 Narxi: 350 000 so‘m / oy
+
+✍️ Agar sizni bu kurs qiziqtirsa, “Ro‘yxatdan o‘tish” tugmasini bosing.
+ `,
+  {
+    reply_markup: {
+        keyboard: [
+            [{text: "✍️ Ro‘yxatdan o‘tish"}],
+            [{ text: "⬅️ Orqaga" }],
+        ],
+        resize_keyboard: true,
+    },
+  }
+
+    );
+  }
 })
+
+console.log("Bot ishga tushdi...");
