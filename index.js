@@ -1,20 +1,22 @@
 const TelegramBot = require("node-telegram-bot-api");
+const { config } = require("dotenv");
 
-const TOKEN = "7304904644:AAEvnfwmkGAAH0xv8-2_KDcjAz0jskUpCPg";
+config();
+const TOKEN = process.env.BOT_TOKEN;
 
 const bot = new TelegramBot(TOKEN, { polling: true });
 
 bot.on("message", (msg) => {
-    console.log(msg);
-    const chatId = msg.chat.id;
-     const text = msg.text;
-      const firstName = msg.chat.first_name;
-    
-      if (text == "/start" || text == "Boshlash 🔥" ) {
-        bot.sendMessage(
-            chatId,
-            `
-                👋 Assalomu alaykum, ${firstName}!
+  console.log(msg);
+  const chatId = msg.chat.id;
+  const text = msg.text;
+  const firstName = msg.chat.first_name;
+
+  if (text == "/start" || text == "Boshlash 🔥"  || text == "⬅️ Orqaga") {
+    bot.sendMessage(
+      chatId,
+      `
+        👋 Assalomu alaykum, ${firstName}!
 
 📚 100x o‘quv markazining rasmiy botiga xush kelibsiz!
 
@@ -25,19 +27,20 @@ Bu bot orqali siz:
 
 Quyidagi menyudan kerakli bo‘limni tanlang 👇
             `,
-            {
-                reply_markup: {
-                    keyboard: [
-                        [{text:"📚 Kurslar"}, {text: "✍️ Ro‘yxatdan o‘tish"}],
-                        [{ text: "ℹ️ Markaz haqida" }, { text: "💬 Fikr bildirish" }],
-                        [{ text: "❓ Yordam" }],
-                    ],
-                    resize_keyboard: true,
-                },
-            }
-        );
-      }else if (text == "📚 Kurslar" || "⬅️ Orqaga"  ) {
-    bot.sendMessage(
+      {
+        reply_markup: {
+          keyboard: [
+            [{ text: "📚 Kurslar" }, { text: "✍️ Ro‘yxatdan o‘tish" }],
+            [{ text: "ℹ️ Markaz haqida" }, { text: "💬 Fikr bildirish" }],
+            [{ text: "❓ Yordam" }],
+          ],
+          resize_keyboard: true,
+        },
+      }
+    );
+  } else if (text == "📚 Kurslar") {
+    console.log("test");
+     bot.sendMessage(
       chatId,
       `
     🎓 Bizning o‘quv markazimizda quyidagi kurslar mavjud:
@@ -59,19 +62,20 @@ Quyidagi menyudan kerakli bo‘limni tanlang 👇
             [{ text: "🧮 Matematika", callback_data: "course_math" }],
             [{ text: "💻 Dasturlash", callback_data: "course_programming" }],
             [{ text: "🎨 Grafik dizayn", callback_data: "course_design" }],
-          ],
+          ],          
         },
       }
-    );
+      );
 
-  }else if (text == "ℹ️ Markaz haqida") {
+
+  } else if (text == "ℹ️ Markaz haqida") {
     const latitude = 41.3871008;
     const longitude = 60.3624996;
 
     bot.sendMessage(chatId, "📍 Bizning o‘quv markaz joylashuvi:");
     bot.sendLocation(chatId, latitude, longitude);
-  }else{
-        bot.sendMessage( chatId,
+  } else {
+    bot.sendMessage(chatId,
       `
     ⚠️ Kechirasiz, men sizning xabaringizni tushunmadim.
 
@@ -88,8 +92,8 @@ bot.on("callback_query", (query) => {
 
   if (data == "course_english") {
     bot.sendMessage(
-        chatId,
-        `
+      chatId,
+      `
      🇬🇧 Ingliz tili kursi haqida:
 
 📆 Davomiyligi: 3 oy  
@@ -99,39 +103,115 @@ bot.on("callback_query", (query) => {
 
 ✍️ Agar sizni bu kurs qiziqtirsa, “Ro‘yxatdan o‘tish” tugmasini bosing.
  `,
-  {
-    reply_markup: {
-        keyboard: [
-            [{text: "✍️ Ro‘yxatdan o‘tish"}],
+      {
+        reply_markup: {
+          keyboard: [
+            [{ text: "✍️ Ro‘yxatdan o‘tish" }],
             [{ text: "⬅️ Orqaga" }],
-        ],
-        resize_keyboard: true,
-    },
-  }
+          ],
+          resize_keyboard: true,
+        },
+      }
 
     );
-  }else if (data == "course_russian") {
-       bot.sendMessage(
-        chatId,
-        `
-     🇬🇧 Ingliz tili kursi haqida:
+  } else if (data == "course_russian") {
+    bot.sendMessage(
+      chatId,
+      `
+        🇷🇺 Rus tili kursi haqida:
 
-📆 Davomiyligi: 3 oy  
+📆 Davomiyligi: 4 oy  
 ⏰ Darslar: Haftasiga 3 marta (1,5 soatdan)  
 👨‍🏫 O‘qituvchi: Tajribali filologlar  
 💰 Narxi: 350 000 so‘m / oy
 
 ✍️ Agar sizni bu kurs qiziqtirsa, “Ro‘yxatdan o‘tish” tugmasini bosing.
- `,
-  {
-    reply_markup: {
-        keyboard: [
-            [{text: "✍️ Ro‘yxatdan o‘tish"}],
+
+        `,
+      {
+        reply_markup: {
+          keyboard: [
+            [{ text: "✍️ Ro‘yxatdan o‘tish" }],
             [{ text: "⬅️ Orqaga" }],
-        ],
-        resize_keyboard: true,
-    },
-  }
+          ],
+          resize_keyboard: true,
+        },
+      }
+
+    );
+  } else if (data == "course_math") {
+    bot.sendMessage(
+      chatId,
+      `
+        🧮 Matematika kursi haqida:
+
+📆 Davomiyligi: 3 oy  
+⏰ Darslar: Haftasiga 3 marta (1,5 soatdan)  
+👨‍🏫 O‘qituvchi: Tajribali filologlar  
+💰 Narxi: 300 000 so‘m / oy
+
+✍️ Agar sizni bu kurs qiziqtirsa, “Ro‘yxatdan o‘tish” tugmasini bosing.
+
+        `,
+      {
+        reply_markup: {
+          keyboard: [
+            [{ text: "✍️ Ro‘yxatdan o‘tish" }],
+            [{ text: "⬅️ Orqaga" }],
+          ],
+          resize_keyboard: true,
+        },
+      }
+
+    );
+  } else if (data == "course_programming") {
+    bot.sendMessage(
+      chatId,
+      `
+        💻 Dasturlash kursi haqida:
+
+📆 Davomiyligi: 5 oy  
+⏰ Darslar: Haftasiga 3 marta (1,5 soatdan)  
+👨‍🏫 O‘qituvchi: Tajribali filologlar  
+💰 Narxi: 250 000 so‘m / oy
+
+✍️ Agar sizni bu kurs qiziqtirsa, “Ro‘yxatdan o‘tish” tugmasini bosing.
+
+        `,
+      {
+        reply_markup: {
+          keyboard: [
+            [{ text: "✍️ Ro‘yxatdan o‘tish" }],
+            [{ text: "⬅️ Orqaga" }],
+          ],
+          resize_keyboard: true,
+        },
+      }
+
+    );
+  } else if (data == "course_design") {
+    bot.sendMessage(
+      chatId,
+      `
+        🎨 Grafik dizayn kursi haqida:
+
+📆 Davomiyligi: 4 oy  
+⏰ Darslar: Haftasiga 3 marta (1,5 soatdan)  
+👨‍🏫 O‘qituvchi: Tajribali filologlar  
+💰 Narxi: 350 000 so‘m / oy
+
+✍️ Agar sizni bu kurs qiziqtirsa, “Ro‘yxatdan o‘tish” tugmasini bosing.
+
+        `,
+      {
+        reply_markup: {
+          keyboard: [
+            [{ text: "✍️ Ro‘yxatdan o‘tish" }],
+            [{ text: "⬅️ Orqaga" }],
+          ],
+          resize_keyboard: true,
+        },
+      }
 
     );
   }
