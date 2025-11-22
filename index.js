@@ -1,6 +1,11 @@
 import TelegramBot from "node-telegram-bot-api";
 import { config } from "dotenv";
 import { onStart } from "./src/onStart.js";
+import { onCourses } from "./src/onCourses.js";
+import { onLocation } from "./src/onLocation.js";
+import { onRegister } from "./src/onRegister.js";
+
+
 
 const TOKEN = process.env.BOT_TOKEN;
 
@@ -18,43 +23,16 @@ bot.on("message", (msg) => {
        onStart(chatId, firstName);
   } else if (text == "📚 Kurslar") {
     console.log("test");
-     bot.sendMessage(
-      chatId,
-      `
-    🎓 Bizning o‘quv markazimizda quyidagi kurslar mavjud:
-
-1️⃣ Ingliz tili  
-2️⃣ Rus tili  
-3️⃣ Matematika  
-4️⃣ Dasturlash (Python, Web)  
-5️⃣ Grafik dizayn  
-
-👇 Quyidagi kurslardan birini tanlang va batafsil ma’lumot oling:
-
-    `,
-      {
-        reply_markup: {
-          inline_keyboard: [
-            [{ text: "🇬🇧 Ingliz tili", callback_data: "course_english" }],
-            [{ text: "🇷🇺 Rus tili", callback_data: "course_russian" }],
-            [{ text: "🧮 Matematika", callback_data: "course_math" }],
-            [{ text: "💻 Dasturlash", callback_data: "course_programming" }],
-            [{ text: "🎨 Grafik dizayn", callback_data: "course_design" }],
-          ],          
-        },
-      }
-      );
-
-
+       onCourses(chatId );
   } else if (text == "ℹ️ Markaz haqida" || text == "📍 Manzil") {
     const latitude = 41.3871008;
     const longitude = 60.3624996;
-
-    bot.sendMessage(chatId, "📍 Bizning o‘quv markaz joylashuvi:");
-    bot.sendLocation(chatId, latitude, longitude);
+       onLocation(chatId, latitude, longitude);
   }else if (text ==  "✍️ Ro‘yxatdan o‘tish") {
         const userExists = usersData.some((user) => user.chatId === chatId);
     console.log("exists: ", userExists);
+       onRegister(chatId);
+
     if (!userExists) {
       usersData = [
         ...usersData,
