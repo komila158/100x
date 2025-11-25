@@ -4,12 +4,23 @@ import { onStart } from "./src/onStart.js";
 import { onCourses } from "./src/onCourses.js";
 import { onLocation } from "./src/onLocation.js";
 import { onRegister } from "./src/onRegister.js";
+import mongoose from "mongoose";
 
+config()
 
 
 const TOKEN = process.env.BOT_TOKEN;
 
 const bot = new TelegramBot(TOKEN, { polling: true });
+
+mongoose.connect(process.env.MONGO_URI).then(() => {
+  console.log(`Db is connected successfully!`);
+})
+.catch(() => {
+  console.log(`Error: db is not connected...`);
+})
+
+
 let userState = {};
 
 
